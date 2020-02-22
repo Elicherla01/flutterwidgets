@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  double sliderValue = 10.0;
+  String validAge;
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'this is for test',
+          style: TextStyle(fontSize: 30.0),
+        ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+        ),
+        padding: EdgeInsets.all(40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Your age is $sliderValue'),
+            Slider(
+              value: sliderValue,
+              onChanged: (double _inputValue) {
+                setState(() {
+                  sliderValue = _inputValue.roundToDouble();
+                  if (sliderValue > 30.0) {
+                    validAge = "This is valid age";
+                  } else {
+                    validAge = "This is not valid age";
+                  }
+                });
+              },
+              activeColor: Colors.red,
+              min: 0.0,
+              max: 100.0,
+            ),
+            Text('$validAge'),
+          ],
+        ),
+      ),
+    );
+  }
+}
