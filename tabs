@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import './firsttab.dart';
+import './secondtab.dart';
+import './thirdtab.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Corona App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Corona Virus'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  TabController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(vsync: this, length: 3);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarOpacity: 0.7,
+        centerTitle: true,
+        title: Text(
+          widget.title,
+          style: TextStyle(fontSize: 30.0),
+        ),
+        bottom: TabBar(
+          tabs: <Widget>[
+            Tab(
+              icon: Icon(Icons.account_circle),
+            ),
+            Tab(
+              icon: Icon(Icons.map),
+            ),
+            Tab(
+              icon: Icon(Icons.history),
+            ),
+          ],
+          controller: controller,
+        ),
+      ),
+
+      body: TabBarView(
+        children: <Widget>[FirstTab(), SecondTab(), ThirdTab()],
+        controller: controller,
+      ),
+
+      // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
